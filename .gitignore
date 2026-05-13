@@ -3,6 +3,9 @@
 *~
 .netrwhist
 
+# --- agent handoffs (local session notes, not for git) ---
+handoffs/
+
 # --- pi harness ---
 .pi/sessions/
 .pi/cache/
