@@ -17,6 +17,7 @@ do not hand-edit them.
 | Run plan → implement → review end-to-end | `/ship <feature>` |
 | Just implement an approved plan | `/implement` |
 | Review the current diff | `/review` |
+| Ask multiple questions to the user| Ask questions sequentially, default to numbered multiple choice |
 | Record an architecture decision | `/adr <title>` |
 | Bootstrap a brand-new project (Q&A → plan → build → review → UML) | start pi in an empty dir, or `/skill:new-project-bootstrap` |
 | Resume an existing project | start pi in the dir, the `uml-tracker` extension auto-loads `UML.md` |
@@ -155,6 +156,14 @@ _TypeScript extensions auto-loaded by pi. Each may register tools, commands, and
 | Name | Scope | What it does | Source |
 |---|---|---|---|
 | `pi-reference` | global | Keeps ~/.pi/agent/AGENTS.md current by regenerating the auto-populated sections (prompts / skills / chains / extensions) between the markers <!-- pi-ref:auto-start --> ... <!-- pi-ref:auto-end --> on every session sta... | `~/.pi/agent/extensions/pi-reference/index.ts` |
+| `secret-scanner` | global | (see source) | `~/.pi/agent/extensions/secret-scanner/index.ts` |
+| `uml-tracker` | global | (see source) | `~/.pi/agent/extensions/uml-tracker/index.ts` |
+
+<!-- pi-ref:auto-end --> on every session sta... | `~/.pi/agent/extensions/pi-reference/index.ts` |
+| `secret-scanner` | global | (see source) | `~/.pi/agent/extensions/secret-scanner/index.ts` |
+| `uml-tracker` | global | (see source) | `~/.pi/agent/extensions/uml-tracker/index.ts` |
+
+<!-- pi-ref:auto-end --> on every session sta... | `~/.pi/agent/extensions/pi-reference/index.ts` |
 | `secret-scanner` | global | (see source) | `~/.pi/agent/extensions/secret-scanner/index.ts` |
 | `uml-tracker` | global | (see source) | `~/.pi/agent/extensions/uml-tracker/index.ts` |
 
