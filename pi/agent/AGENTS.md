@@ -250,6 +250,14 @@ _TypeScript extensions auto-loaded by pi. Each may register tools, commands, and
 | `secret-scanner` | global | (see source) | `~/.pi/agent/extensions/secret-scanner/index.ts` |
 | `uml-tracker` | global | (see source) | `~/.pi/agent/extensions/uml-tracker/index.ts` |
 
+<!-- pi-ref:auto-end --> on every session sta... | `~/.pi/agent/extensions/pi-reference/index.ts` |
+| `secret-scanner` | global | (see source) | `~/.pi/agent/extensions/secret-scanner/index.ts` |
+| `uml-tracker` | global | (see source) | `~/.pi/agent/extensions/uml-tracker/index.ts` |
+
+<!-- pi-ref:auto-end --> on every session sta... | `~/.pi/agent/extensions/pi-reference/index.ts` |
+| `secret-scanner` | global | (see source) | `~/.pi/agent/extensions/secret-scanner/index.ts` |
+| `uml-tracker` | global | (see source) | `~/.pi/agent/extensions/uml-tracker/index.ts` |
+
 <!-- pi-ref:auto-end -->
 
 ---
