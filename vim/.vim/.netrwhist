@@ -1,0 +1,6 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =4
+let g:netrw_dirhist_4='/Users/gautam/.claude/projects/-Users-gautam-code-ajax/cd2d1564-37d9-4f2d-a888-b426a25608a3/subagents'
+let g:netrw_dirhist_3='/Users/gautam/.claude/projects/-Users-gautam-code-ajax/cd2d1564-37d9-4f2d-a888-b426a25608a3'
+let g:netrw_dirhist_2='/Users/gautam/.claude/projects/-Users-gautam-code-ajax'
+let g:netrw_dirhist_1='/Users/gautam/.claude/projects/-Users-gautam-code-ajax/cd2d1564-37d9-4f2d-a888-b426a25608a3'
