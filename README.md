@@ -2,15 +2,16 @@
 
 Gautam Nair (g23polar) dotfiles.
 
-## To install
- From here, on any new machine it's just:
-
- ```bash                          
-   git clone <repo> ~/dotfiles                                                                                                                                                                                             
-   bash ~/dotfiles/install.sh                                                                                                                                                                                              ```                                                                                                                                                                                                                       
-
 
 ## Quick Start
+
+ From here, on any new machine it's just:                                                                                                                                                        
+                                                                                                                                                                                                
+ ```bash                                                                                                                                                                                         
+   git clone <repo> ~/dotfiles                                                                                                                                                                   
+   bash ~/dotfiles/install.sh                                                                                                                                                                    
+ ```                                                                                                                                                                                                                                                                                                                                                                            
+ And pi config, shell rc files, git, and vim are all wired up. 
 
 ```bash
 # install / run
