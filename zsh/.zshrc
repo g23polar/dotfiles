@@ -1,6 +1,8 @@
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="/usr/local/opt/postgresql@16/bin:$PATH"
 
+[ -f "$HOME/dotfiles/shell/aliases.sh" ] && source "$HOME/dotfiles/shell/aliases.sh"
+
 function code() {
   command code "$@"
   sleep 3
