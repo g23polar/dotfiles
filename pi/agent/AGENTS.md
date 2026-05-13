@@ -119,6 +119,7 @@ _Invoke with `/<name>`. Files live in `~/.pi/agent/prompts/` or `<project>/.pi/p
 | Name | Scope | What it does | Source |
 |---|---|---|---|
 | `adr` | global | Create a new Architecture Decision Record in docs/adr/ | `~/.pi/agent/prompts/adr.md` |
+| `feature` | global | Add a new feature using the structured workflow — clarify requirements, survey existing patterns, plan with approval gate, implement, update UML.md, review diff | `~/.pi/agent/prompts/feature.md` |
 | `implement` | global | Implement the approved plan.md using the worker subagent | `~/.pi/agent/prompts/implement.md` |
 | `init-project` | global | Bootstrap a new project with .pi/, CONTEXT.md, docs/adr/, README, .gitignore | `~/.pi/agent/prompts/init-project.md` |
 | `plan` | global | Create or update plan.md for the requested work (planning-first workflow) | `~/.pi/agent/prompts/plan.md` |
@@ -132,6 +133,8 @@ _Invoke with `/skill:<name>`, or let the model load them automatically._
 | Name | Scope | What it does | Source |
 |---|---|---|---|
 | `existing-project-resume` | global | Resume work in an existing project by reading UML.md, summarizing the codebase from it, and surfacing the last recorded activity. Load this when pi opens in a directory that already has a UML.md, or when the user asks "where did I leave off". | `~/.pi/agent/skills/existing-project-resume/SKILL.md` |
+| `feature-addition` | global | Structured workflow for adding any new feature to an existing project. Creates a features/<slug>/ directory containing a living spec (README.md), technical plan (plan.md), implementation log (changes.md), and review report (review.md). Covers requirements clarification, codebase pattern survey, plan approval gate, implementation, UML.md update, and diff review. Use whenever a user asks to add, build, or implement a new feature, integration, job, endpoint, or module. | `~/.pi/agent/skills/feature-addition/SKILL.md` |
+| `handoff` | global | Manages the handoffs/ directory — a chronological log of session-ending state snapshots. Write a handoff when finishing a session or completing a feature. Read the latest handoff when resuming a project. The next agent reads ONLY the most recent handoff file; older files are the user's version history and must not be read by the agent. Load this skill when asked to hand off, wrap up, or when resuming a project that has a handoffs/ directory. | `~/.pi/agent/skills/handoff/SKILL.md` |
 | `new-project-bootstrap` | global | Comprehensive bootstrap flow for a brand-new project. Begins with a deep-dive architectural conversation, then runs a plan → implement → review chain, and finally writes the initial UML.md. Load this when the user starts pi in an empty or near-empty directory, or when explicitly asked to bootstrap a new project. | `~/.pi/agent/skills/new-project-bootstrap/SKILL.md` |
 | `planning-first` | global | Enforce a planning-first workflow. Before non-trivial implementation, write or update plan.md with goals, approach, file-level changes, risks, and a checklist. Use when the user asks to build a feature, refactor, fix a non-obvious bug, or whenever scope is unclear. Skip only for one-line tweaks or pure questions. | `~/.pi/agent/skills/planning-first/SKILL.md` |
 | `uml-maintenance` | global | Canonical specification for the project's UML.md file. Every project pi works on keeps a single UML.md at the repo root that captures the current architecture as Mermaid diagrams plus a Last Activity log. Load this skill when creating or updating UML.md. | `~/.pi/agent/skills/uml-maintenance/SKILL.md` |
@@ -151,6 +154,22 @@ _TypeScript extensions auto-loaded by pi. Each may register tools, commands, and
 | Name | Scope | What it does | Source |
 |---|---|---|---|
 | `pi-reference` | global | Keeps ~/.pi/agent/AGENTS.md current by regenerating the auto-populated sections (prompts / skills / chains / extensions) between the markers <!-- pi-ref:auto-start --> ... <!-- pi-ref:auto-end --> on every session sta... | `~/.pi/agent/extensions/pi-reference/index.ts` |
+| `secret-scanner` | global | (see source) | `~/.pi/agent/extensions/secret-scanner/index.ts` |
+| `uml-tracker` | global | (see source) | `~/.pi/agent/extensions/uml-tracker/index.ts` |
+
+<!-- pi-ref:auto-end --> on every session sta... | `~/.pi/agent/extensions/pi-reference/index.ts` |
+| `secret-scanner` | global | (see source) | `~/.pi/agent/extensions/secret-scanner/index.ts` |
+| `uml-tracker` | global | (see source) | `~/.pi/agent/extensions/uml-tracker/index.ts` |
+
+<!-- pi-ref:auto-end --> on every session sta... | `~/.pi/agent/extensions/pi-reference/index.ts` |
+| `secret-scanner` | global | (see source) | `~/.pi/agent/extensions/secret-scanner/index.ts` |
+| `uml-tracker` | global | (see source) | `~/.pi/agent/extensions/uml-tracker/index.ts` |
+
+<!-- pi-ref:auto-end --> on every session sta... | `~/.pi/agent/extensions/pi-reference/index.ts` |
+| `secret-scanner` | global | (see source) | `~/.pi/agent/extensions/secret-scanner/index.ts` |
+| `uml-tracker` | global | (see source) | `~/.pi/agent/extensions/uml-tracker/index.ts` |
+
+<!-- pi-ref:auto-end --> on every session sta... | `~/.pi/agent/extensions/pi-reference/index.ts` |
 | `secret-scanner` | global | (see source) | `~/.pi/agent/extensions/secret-scanner/index.ts` |
 | `uml-tracker` | global | (see source) | `~/.pi/agent/extensions/uml-tracker/index.ts` |
 
