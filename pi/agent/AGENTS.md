@@ -9,6 +9,14 @@ do not hand-edit them.
 
 ---
 
+## Standing rules
+
+- Always ensure `handoffs/` is listed in the project's `.gitignore`. Add it if it's missing.
+
+---
+
+---
+
 ## I want to...
 
 | Goal | Do this |
@@ -156,6 +164,22 @@ _TypeScript extensions auto-loaded by pi. Each may register tools, commands, and
 | Name | Scope | What it does | Source |
 |---|---|---|---|
 | `pi-reference` | global | Keeps ~/.pi/agent/AGENTS.md current by regenerating the auto-populated sections (prompts / skills / chains / extensions) between the markers <!-- pi-ref:auto-start --> ... <!-- pi-ref:auto-end --> on every session sta... | `~/.pi/agent/extensions/pi-reference/index.ts` |
+| `secret-scanner` | global | (see source) | `~/.pi/agent/extensions/secret-scanner/index.ts` |
+| `uml-tracker` | global | (see source) | `~/.pi/agent/extensions/uml-tracker/index.ts` |
+
+<!-- pi-ref:auto-end --> on every session sta... | `~/.pi/agent/extensions/pi-reference/index.ts` |
+| `secret-scanner` | global | (see source) | `~/.pi/agent/extensions/secret-scanner/index.ts` |
+| `uml-tracker` | global | (see source) | `~/.pi/agent/extensions/uml-tracker/index.ts` |
+
+<!-- pi-ref:auto-end --> on every session sta... | `~/.pi/agent/extensions/pi-reference/index.ts` |
+| `secret-scanner` | global | (see source) | `~/.pi/agent/extensions/secret-scanner/index.ts` |
+| `uml-tracker` | global | (see source) | `~/.pi/agent/extensions/uml-tracker/index.ts` |
+
+<!-- pi-ref:auto-end --> on every session sta... | `~/.pi/agent/extensions/pi-reference/index.ts` |
+| `secret-scanner` | global | (see source) | `~/.pi/agent/extensions/secret-scanner/index.ts` |
+| `uml-tracker` | global | (see source) | `~/.pi/agent/extensions/uml-tracker/index.ts` |
+
+<!-- pi-ref:auto-end --> on every session sta... | `~/.pi/agent/extensions/pi-reference/index.ts` |
 | `secret-scanner` | global | (see source) | `~/.pi/agent/extensions/secret-scanner/index.ts` |
 | `uml-tracker` | global | (see source) | `~/.pi/agent/extensions/uml-tracker/index.ts` |
 
