@@ -1,0 +1,9 @@
+{
+  "$schema": "https://pi.earendil.works/schemas/settings.json",
+  "enableSkillCommands": true,
+  "shellCommandPrefix": "shopt -s expand_aliases 2>/dev/null; [ -f ~/.zshrc ] && eval \"$(grep -E '^alias ' ~/.zshrc 2>/dev/null)\" || true",
+  "lastChangelogVersion": "0.74.0",
+  "defaultProvider": "anthropic",
+  "defaultModel": "claude-sonnet-4-6",
+  "defaultThinkingLevel": "medium"
+}

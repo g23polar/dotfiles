@@ -7,3 +7,16 @@
 .pi/sessions/
 .pi/cache/
 .pi/tmp/
+
+# --- pi config tracked under pi/, but never these ---
+pi/agent/sessions/
+pi/agent/auth.json
+pi/agent/bin/rg
+pi/agent/cache/
+pi/agent/tmp/
+pi/agent/keybindings.json
+pi/agent/extensions/**/node_modules/
+
+# --- dotfiles installer leftovers ---
+.dotfiles-backup-*/
+pi-backup-*.tgz

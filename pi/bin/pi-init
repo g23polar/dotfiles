@@ -1,0 +1,103 @@
+#!/usr/bin/env bash
+# pi-init — bootstrap a project for the planning-first pi harness.
+# Idempotent: safe to run on an existing project. Never overwrites existing files.
+
+set -euo pipefail
+
+TEMPLATES="${PI_TEMPLATES:-$HOME/.pi/agent/templates}"
+TARGET="$(pwd)"
+
+if [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ]; then
+  cat <<EOF
+Usage: pi-init [project-name]
+
+Bootstrap the current working directory as a planning-first pi project.
+Idempotent — never overwrites existing files.
+
+Files installed (if missing):
+  CONTEXT.md, README.md, docs/adr/0000-*.md, .pi/, plans/, .gitignore additions, git init
+
+Project name defaults to the basename of cwd.
+Templates dir override: PI_TEMPLATES=<path>
+EOF
+  exit 0
+fi
+
+if [ -n "${1:-}" ] && [[ "$1" == -* ]]; then
+  echo "error: unknown flag '$1' (try --help)" >&2
+  exit 2
+fi
+
+PROJECT_NAME="${1:-$(basename "$TARGET")}"
+
+if [ ! -d "$TEMPLATES" ]; then
+  echo "error: templates dir not found: $TEMPLATES" >&2
+  exit 1
+fi
+
+created=()
+skipped=()
+
+copy_if_missing() {
+  local src="$1" dst="$2"
+  if [ -e "$dst" ]; then
+    skipped+=("$dst")
+  else
+    mkdir -p "$(dirname "$dst")"
+    cp "$src" "$dst"
+    created+=("$dst")
+  fi
+}
+
+# Directories
+for d in .pi docs/adr plans; do
+  if [ ! -d "$TARGET/$d" ]; then
+    mkdir -p "$TARGET/$d"
+    created+=("$d/")
+  else
+    skipped+=("$d/")
+  fi
+done
+
+# Files
+copy_if_missing "$TEMPLATES/CONTEXT.md" "$TARGET/CONTEXT.md"
+copy_if_missing "$TEMPLATES/docs/adr/0000-record-architecture-decisions.md" \
+                "$TARGET/docs/adr/0000-record-architecture-decisions.md"
+
+# README — interpolate project name
+if [ -e "$TARGET/README.md" ]; then
+  skipped+=("README.md")
+else
+  sed "s/__PROJECT_NAME__/$PROJECT_NAME/g" "$TEMPLATES/README.md" > "$TARGET/README.md"
+  created+=("README.md")
+fi
+
+# .gitignore — append harness lines if not already present
+GI="$TARGET/.gitignore"
+MARKER="# --- pi harness ---"
+if [ -f "$GI" ] && grep -qF "$MARKER" "$GI"; then
+  skipped+=(".gitignore (already configured)")
+else
+  cat "$TEMPLATES/gitignore.append" >> "$GI"
+  created+=(".gitignore (appended)")
+fi
+
+# git init if needed
+if [ ! -d "$TARGET/.git" ]; then
+  git init -q "$TARGET"
+  created+=(".git/")
+else
+  skipped+=(".git/")
+fi
+
+echo "pi-init: project '$PROJECT_NAME' at $TARGET"
+echo
+echo "Created:"
+for f in "${created[@]:-}"; do [ -n "$f" ] && echo "  + $f"; done
+echo
+echo "Skipped (already present):"
+for f in "${skipped[@]:-}"; do [ -n "$f" ] && echo "  · $f"; done
+echo
+echo "Next:"
+echo "  1. Edit CONTEXT.md to describe the domain."
+echo "  2. In pi, run '/plan <feature>' to start the first feature."
