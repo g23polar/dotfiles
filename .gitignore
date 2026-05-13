@@ -2,3 +2,8 @@
 *.swp
 *~
 .netrwhist
+
+# --- pi harness ---
+.pi/sessions/
+.pi/cache/
+.pi/tmp/
