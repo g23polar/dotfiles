@@ -1,14 +1,20 @@
 ---
-description: Plan → Implement → Review chain end-to-end
+description: Plan → Implement → Review end-to-end
 argument-hint: "<feature or change>"
 ---
 
-Run the full planning-first chain for: $ARGUMENTS
+Run the full plan → implement → review workflow for: $ARGUMENTS
 
-Use the saved `plan-implement-review` chain:
+**Phase 1 — Plan**
+Survey the relevant codebase, then write `plan.md` with Goal, Context, Approach, file-level Changes, Risks, and a Checklist.
 
-```
-subagent({ chainName: "plan-implement-review", task: "$ARGUMENTS" })
-```
+Show the plan and **wait for user approval** before continuing. Do not bypass this gate.
 
-Pause for user approval between Plan and Implement steps. Do not bypass approval.
+**Phase 2 — Implement**
+Work through the `plan.md` checklist. Tick items as they complete. If reality diverges from the plan, stop, update it, and tell the user.
+
+**Phase 3 — Review**
+Review the full diff against the plan. Flag bugs, security issues, plan divergence, missing tests, and doc gaps. Group by severity (🔴/🟡/🟢). Fix any 🔴 items.
+
+**Phase 4 — Wrap up**
+Update `UML.md` if the project has one. Summarize what was done.

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UML — dotfiles</title>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true, theme: 'default' });
+  </script>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 960px; margin: 2rem auto; padding: 0 1rem; color: #222; }
+    h1 { border-bottom: 2px solid #ddd; padding-bottom: .4rem; }
+    h2 { margin-top: 2rem; color: #444; }
+    .meta { color: #888; font-size: .9rem; margin-top: -.5rem; margin-bottom: 1.5rem; }
+    .mermaid { background: #f8f8f8; border-radius: 8px; padding: 1rem; }
+    ul { line-height: 1.8; }
+    code { background: #f0f0f0; padding: .1em .3em; border-radius: 3px; font-size: .9em; }
+  </style>
+</head>
+<body>
+
+<h1>UML — dotfiles</h1>
+<p class="meta">Last updated: 2026-05-15 — docs update, added functions.sh to diagrams</p>
+
+<h2>Overview</h2>
+<p>Personal dotfiles repo. Versions shell rc files, git, vim, and pi coding-agent config. A single <code>install.sh</code> at the repo root symlinks every tracked file into <code>$HOME</code> or <code>~/.pi/</code>. Per-entry symlinks (not directory-level) so machine-local state (OAuth tokens, chat history, bundled binaries) stays outside the repo.</p>
+
+<h2>Module map</h2>
+<ul>
+  <li><code>bash/</code>, <code>zsh/</code>, <code>tcsh/</code> — shell startup files, symlinked into <code>$HOME</code></li>
+  <li><code>shell/</code> — shared <code>env.sh</code> (PATH/env), <code>aliases.sh</code> (aliases), <code>functions.sh</code> (helper functions); sourced by bash + zsh</li>
+  <li><code>git/</code>, <code>vim/</code> — tool configs, symlinked into <code>$HOME</code></li>
+  <li><code>pi/agent/</code> — pi coding-agent config (AGENTS.md, settings, prompts, skills, chains, extensions, templates)</li>
+  <li><code>pi/bin/pi-init</code> — project bootstrap script, on PATH via <code>shell/env.sh</code></li>
+  <li><code>install.sh</code> — idempotent symlink installer</li>
+  <li><code>scripts/</code> — one-time migration helpers</li>
+  <li><code>docs/adr/</code> — architecture decision records</li>
+</ul>
+
+<h2>Structure</h2>
+<div class="mermaid">
+graph TD
+  subgraph Repo[~/dotfiles/]
+    install[install.sh]
+    migrate[scripts/migrate-pi-into-dotfiles.sh]
+
+    subgraph Shells
+      bash[bash/&lt;br/&gt;.bash_profile&lt;br/&gt;.bashrc&lt;br/&gt;.profile]
+      zsh[zsh/&lt;br/&gt;.zshrc&lt;br/&gt;.zshenv&lt;br/&gt;.zprofile]
+      tcsh[tcsh/.tcshrc]
+    end
+    subgraph Shared[shell/]
+      env[env.sh&lt;br/&gt;PATH, env vars]
+      aliases[aliases.sh&lt;br/&gt;cross-shell aliases]
+      funcs[functions.sh&lt;br/&gt;helper functions]
+    end
+    subgraph Tools
+      git[git/.gitconfig]
+      vim[vim/.vim/]
+    end
+    subgraph Pi[pi/]
+      piagent[agent/&lt;br/&gt;AGENTS.md, settings.json,&lt;br/&gt;prompts/, skills/, chains/,&lt;br/&gt;extensions/, templates/]
+      pibin[bin/pi-init]
+    end
+  end
+
+  subgraph Home[$HOME]
+    homerc[.bashrc, .zshrc,&lt;br/&gt;.tcshrc, .gitconfig,&lt;br/&gt;.vim/, ...]
+    pihome[~/.pi/agent/*&lt;br/&gt;~/.pi/bin/pi-init]
+    pilocal[~/.pi/agent/auth.json&lt;br/&gt;~/.pi/agent/sessions/&lt;br/&gt;~/.pi/agent/bin/rg&lt;br/&gt;&lt;i&gt;real files, never tracked&lt;/i&gt;]
+  end
+
+  bash -->|source| env
+  bash -->|source| aliases
+  bash -->|source| funcs
+  zsh -->|source| env
+  zsh -->|source| aliases
+  zsh -->|source| funcs
+
+  install -.symlink.-> homerc
+  install -.symlink.-> pihome
+  migrate -->|tarball + mv| install
+</div>
+
+<h2>Components</h2>
+<ul>
+  <li><strong>bash/</strong>, <strong>zsh/</strong>, <strong>tcsh/</strong> — shell startup files. bash and zsh source <code>shell/env.sh</code> then <code>shell/aliases.sh</code>. tcsh has inline PATH for <code>pi/bin/</code>.</li>
+  <li><strong>shell/env.sh</strong> — POSIX-sh env-only file. Prepends <code>~/dotfiles/pi/bin</code> to <code>$PATH</code>. Sourced by bash + zsh.</li>
+  <li><strong>shell/aliases.sh</strong> — cross-shell aliases.</li>
+  <li><strong>shell/functions.sh</strong> — helper functions (<code>gacp</code> for git add-commit-push, <code>hi</code> for VS Code workspace setup).</li>
+  <li><strong>git/.gitconfig</strong> — git identity and defaults.</li>
+  <li><strong>vim/.vim/</strong> — vim runtime dir.</li>
+  <li><strong>pi/agent/</strong> — tracked pi config. Symlinked entry-by-entry into <code>~/.pi/agent/</code>.</li>
+  <li><strong>pi/bin/pi-init</strong> — project bootstrap script. Symlinked into <code>~/.pi/bin/pi-init</code> and on <code>$PATH</code> via <code>env.sh</code>.</li>
+  <li><strong>install.sh</strong> — idempotent installer. <code>--backup</code> flag moves conflicts to <code>~/.dotfiles-backup-&lt;ts&gt;/</code>.</li>
+  <li><strong>scripts/migrate-pi-into-dotfiles.sh</strong> — one-time per existing machine. Tarballs <code>~/.pi/</code>, moves tracked entries into <code>pi/</code>, runs <code>install.sh</code>.</li>
+  <li><strong>docs/adr/</strong> — architecture decision records.</li>
+  <li><strong>plans/</strong> — feature plans (planning-first workflow).</li>
+  <li><strong>migration-plan.md</strong> — standalone recovery doc for the pi migration.</li>
+</ul>
+
+<h2>Last Activity</h2>
+<ul>
+  <li>2026-05-15: docs update — rewrote README.md, added functions.sh to UML diagrams and module map, generated UML.html. Files: <code>README.md</code>, <code>UML.md</code>, <code>UML.html</code>.</li>
+  <li>2026-05-13: implemented pi-config-into-dotfiles plan. Added <code>install.sh</code>, <code>scripts/migrate-pi-into-dotfiles.sh</code>, <code>shell/env.sh</code>, <code>pi/README.md</code>, ADR 0001. The migration itself has <strong>not</strong> been run yet.</li>
+  <li>2026-05-13: bootstrapped planning-first harness (<code>.pi/</code>, <code>docs/adr/</code>, <code>plans/</code>, <code>CONTEXT.md</code>, <code>README.md</code>, ADR seed) and created initial <code>UML.md</code>.</li>
+</ul>
+
+</body>
+</html>

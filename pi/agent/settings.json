@@ -2,8 +2,13 @@
   "$schema": "https://pi.earendil.works/schemas/settings.json",
   "enableSkillCommands": true,
   "shellCommandPrefix": "shopt -s expand_aliases 2>/dev/null; [ -f ~/.zshrc ] && eval \"$(grep -E '^alias ' ~/.zshrc 2>/dev/null)\" || true",
-  "lastChangelogVersion": "0.74.0",
+  "lastChangelogVersion": "0.75.4",
   "defaultProvider": "anthropic",
-  "defaultModel": "claude-sonnet-4-6",
-  "defaultThinkingLevel": "medium"
+  "defaultModel": "claude-opus-4-6",
+  "defaultThinkingLevel": "medium",
+  "scopedModels": [
+    "claude-sonnet-4-20250514",
+    "claude-opus-4-6",
+    "claude-haiku-3-5-20241022"
+  ]
 }
