@@ -190,7 +190,11 @@ function renderTable(
   lines.push("| Name | Scope | What it does | Source |");
   lines.push("|---|---|---|---|");
   for (const e of entries) {
-    const desc = e.description.replace(/\|/g, "\\|").replace(/\n+/g, " ");
+    const desc = e.description
+      .replace(/\|/g, "\\|")
+      .replace(/\n+/g, " ")
+      .replaceAll(START_MARK, "&lt;!-- pi-ref:auto-start --&gt;")
+      .replaceAll(END_MARK, "&lt;!-- pi-ref:auto-end --&gt;");
     lines.push(`| \`${e.name}\` | ${e.scope} | ${desc} | \`${e.source}\` |`);
   }
   lines.push("");
@@ -267,7 +271,7 @@ function regenerate(cwd: string): { changed: boolean; reason?: string } {
     return { changed: false, reason: "AGENTS.md missing" };
   }
   const startIdx = current.indexOf(START_MARK);
-  const endIdx = current.indexOf(END_MARK);
+  const endIdx = current.lastIndexOf(END_MARK);
   if (startIdx < 0 || endIdx < 0 || endIdx < startIdx) {
     return { changed: false, reason: "markers missing" };
   }
