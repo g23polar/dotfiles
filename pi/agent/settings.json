@@ -10,5 +10,8 @@
     "claude-sonnet-4-20250514",
     "claude-opus-4-6",
     "claude-haiku-3-5-20241022"
+  ],
+  "packages": [
+    "../../code/pi-project-memory"
   ]
 }
