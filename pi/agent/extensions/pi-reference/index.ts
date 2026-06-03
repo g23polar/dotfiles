@@ -286,7 +286,7 @@ function regenerate(cwd: string): { changed: boolean; reason?: string } {
 // --- extension entry ---
 
 export default function (pi: ExtensionAPI) {
-  const refresh = (cwd: string, ui?: { notify: (m: string, l?: string) => void }) => {
+  const refresh = (cwd: string, ui?: { notify: (m: string, l?: "warning" | "error" | "info") => void }) => {
     try {
       const r = regenerate(cwd);
       if (r.reason && ui) ui.notify(`pi-reference: ${r.reason}`, "warning");

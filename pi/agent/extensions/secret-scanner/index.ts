@@ -288,7 +288,7 @@ export default function (pi: ExtensionAPI) {
       ctx.ui.notify(`secret-scanner: scanning ${abs}…`, "info");
       const findings = scanPath(abs);
       if (findings.length === 0) {
-        ctx.ui.notify("secret-scanner: clean — no secrets detected.", "success");
+        ctx.ui.notify("secret-scanner: clean — no secrets detected.", "info");
         return;
       }
       const summary = summarizeFindings(findings);

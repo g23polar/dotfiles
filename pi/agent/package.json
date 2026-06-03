@@ -1,0 +1,14 @@
+{
+  "name": "pi-dotfiles-agent",
+  "private": true,
+  "description": "Local TypeScript workspace for editing pi extensions in ~/dotfiles/pi/agent/extensions/. Not published, not loaded by pi at runtime — exists only so IDEs can resolve @earendil-works/pi-coding-agent types.",
+  "devDependencies": {
+    "@earendil-works/pi-coding-agent": "*",
+    "@types/node": "^20",
+    "typebox": "*",
+    "typescript": "^5.4.0"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  }
+}
